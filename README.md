@@ -6,6 +6,8 @@ I've written a script for the CASTOR Plots based on Dr. Matt's email. I've gotte
 
 The temperature I used in this script is a median temperature (about 32,000K) from the 500 temperatures I calculated using the formula in the Arnett paper coupled with the blackbody equation, given the inputs of masses ranging from 8–20 solar masses, at an average value of 750 solar radii. I've varied the radius of the progenitor from 8 to 20 solar masses (typical range). The plots seem to mostly be identical in shape but the flux values vary. I've attached them below.
 
+Note: the files/plots I've uploaded for now vary only the masses. I have scripts for varying explosion energies and radii as well. I just uploaded one to present the values I'm getting so far.
+
 ---
 
 ### 8M☉
