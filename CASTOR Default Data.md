@@ -1,7 +1,7 @@
 # CASTOR Updated Models Data
 
 
-## 🧾 Default Model
+## Default Model
 
 - **Radius**: \(10^{13}\) cm  
 - **Explosion energy**: \(10^{51}\) erg  
@@ -26,9 +26,9 @@
 
 ---
 
-## 📊 Parameter Variations
+## Parameter Variations
 
-### 🔸 Smaller Radius: \(10^{12}\) cm
+### Smaller Radius: \(10^{12}\) cm
 
 - **Temperature**: 92,428 K  
 - **Peak λ**: 31.35 nm  
@@ -37,7 +37,7 @@
 
 ---
 
-### 🔸 Larger Radius: \(10^{14}\) cm
+### Larger Radius: \(10^{14}\) cm
 
 - **Temperature**: 29,228 K  
 - **Peak λ**: 99.15 nm  
@@ -46,7 +46,7 @@
 
 ---
 
-### 🔸 Lower Mass: \(5~M_\odot\)
+### Lower Mass: \(5~M_\odot\)
 
 - **Temperature**: 61,810 K  
 - **Luminosity**: \(1.04 \times 10^{35}\) W  
@@ -54,7 +54,7 @@
 
 ---
 
-### 🔸 Higher Mass: \(20~M_\odot\)
+### Higher Mass: \(20~M_\odot\)
 
 - **Temperature**: 43,706 K  
 - **Luminosity**: \(2.6 \times 10^{34}\) W  
@@ -62,7 +62,7 @@
 
 ---
 
-### 🔸 Lower Energy: \(10^{50}\) erg
+### Lower Energy: \(10^{50}\) erg
 
 - **Temperature**: 29,228 K  
 - **Luminosity**: \(5.2 \times 10^{33}\) W  
@@ -70,7 +70,7 @@
 
 ---
 
-### 🔸 Higher Energy: \(10^{52}\) erg
+### Higher Energy: \(10^{52}\) erg
 
 - **Temperature**: 92,428 K  
 - **Luminosity**: \(5.2 \times 10^{35}\) W  
@@ -78,16 +78,10 @@
 
 ---
 
-## 📉 Physical Insight
+## Physical Insight
 
 > As temperature increases, more of the emission shifts into the **extreme UV or soft X-rays**, moving **outside** CASTOR’s observable UV band (150–300 nm).  
 > Thus, even as **total flux increases**, the **UV fraction decreases**.
 
 ---
 
-## 🖼️ Sample Plots
-
-You can export plots from your Python code using:
-
-```python
-plt.savefig("images/spectrum_default.png")
