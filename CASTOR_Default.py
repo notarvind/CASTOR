@@ -1,3 +1,5 @@
+#script with default values of 10M☉ mass, 1e51 erg/s explosion energy, and 1e13 cm radius, as per Dr. Matt's email
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -11,25 +13,27 @@ sigma = 5.67*10**-8
 h = 6.62607015*10**-34 #plancks constant
 k = 1.380649 * 10**-23 #boltzmann constant
 
-lum2 = K_0*(radius/(10**14))*(E_exp/10**51)*(0.4/kappa)*(1/mass)
+lum2 = K_0*(radius/(10**14))*(E_exp/10**51)*(0.4/kappa)*(1/mass) #using the Arnett's paper formula
 
-radius_m = radius/100
+radius_m = radius/100 #converting to m
 
-lum2_watts = lum2 * 1e-7
+lum2_watts = lum2 * 1e-7 #watts
 
-temp_default = (lum2_watts/(4*np.pi* (radius_m**2) * sigma))**(1/4)
+temp_default = (lum2_watts/(4*np.pi* (radius_m**2) * sigma))**(1/4) #blackbody
 
+#initialising bands
 uv_band = np.linspace(150, 300, 1000)*1e-9
 u_band = np.linspace(300, 400, 1000)*1e-9
 g_band = np.linspace(400, 500, 1000)*1e-9
 all_bands = np.linspace(150, 500, 1000)*1e-9
 
-
+#planck function
 def planck_function(wavelengths, temperatures):
     exponent = (h * c) / (wavelengths * k * temperatures)
     B = (2.0 * h * c**2) / (wavelengths**5) / (np.exp(exponent) - 1)
     return B
 
+#flux calculation
 B_lambda_uv = planck_function(uv_band, temp_default)
 B_lambda_u = planck_function(u_band, temp_default)
 B_lambda_g = planck_function(g_band, temp_default)
