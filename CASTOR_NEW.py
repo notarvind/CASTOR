@@ -11,29 +11,28 @@ sigma = 5.67*10**-8
 h = 6.62607015*10**-34 #plancks constant
 k = 1.380649 * 10**-23 #boltzmann constant
 
-# using the Arnett's paper formula
+
 lum2 = K_0*(radius/(10**14))*(E_exp/10**51)*(0.4/kappa)*(1/mass) 
 radius_m = radius/100 #converting to m
 lum2_watts = lum2 * 1e-7 #watts
 
-# blackbody temperature
+
 temp_default = (lum2_watts/(4*np.pi* (radius_m**2) * sigma))**(1/4) 
 
-# initialising bands
+
 uv_band = np.linspace(150, 300, 1000)*1e-9
 u_band = np.linspace(300, 400, 1000)*1e-9
 g_band = np.linspace(400, 500, 1000)*1e-9
 all_bands = np.linspace(150, 500, 1000)*1e-9
 
-# planck function
+#planck function
 def planck_function(wavelengths, temperatures):
-    # Ensure temperature is positive to avoid issues with np.exp
     temperatures = np.maximum(temperatures, 1e-10) 
     exponent = (h * c) / (wavelengths * k * temperatures)
     B = (2.0 * h * c**2) / (wavelengths**5) / (np.exp(exponent) - 1)
     return B
 
-# flux calculation
+
 B_lambda_uv = planck_function(uv_band, temp_default)
 B_lambda_u = planck_function(u_band, temp_default)
 B_lambda_g = planck_function(g_band, temp_default)
@@ -50,12 +49,12 @@ plt.title("Blackbody Spectrum across CASTOR Bands with at 20M☉, 1e51 ergs, 1e1
 plt.grid(True)
 plt.show()
 
-# assume isotropic - flux same in all directions (sphere)
+#assume isotropic - flux same in all directions 
 total_flux_density_uv = B_lambda_uv * np.pi 
 total_flux_density_u = B_lambda_u * np.pi
 total_flux_density_g = B_lambda_g * np.pi
 
-# integrating
+#integrating
 uv_flux = np.trapz(total_flux_density_uv, uv_band)
 u_flux = np.trapz(total_flux_density_u, u_band)
 g_flux = np.trapz(total_flux_density_g, g_band)
@@ -65,12 +64,12 @@ print(f"Total uv flux: {uv_flux:.3e} W/m²")
 print(f"Total u flux: {u_flux:.3e} W/m²")
 print(f"Total g flux: {g_flux:.3e} W/m²")
 
-# bolometric flux from Stefan-Boltzmann
+#bolometric flux from Stefan-Boltzmann
 F_bol = sigma * temp_default**4
 print(f"Bolometric flux: {F_bol:.3e} W/m²")
 print(f"UV flux fraction: {uv_flux / F_bol:.3%}")
 
-# total luminosities
+#total luminosities in bands
 L_uv = uv_flux * 4 * np.pi * radius_m**2
 L_u = u_flux * 4 * np.pi * radius_m**2
 L_g = g_flux * 4 * np.pi * radius_m**2
@@ -85,27 +84,27 @@ print(f"G Luminosity: {L_g:.3e} W")
 print(f"Bolometric Luminosity: {L_bol:.3e} W")
 print(f"UV % of Bolometric: {L_uv / L_bol:.3%}")
 
-# table
+
 print("\n=== Luminosity Summary ===")
 print(f"{'Band':<10} {'Flux (W/m²)':<15} {'Luminosity (W)':<20} {'% of Bolometric':<15}")
 print(f"{'UV':<10} {uv_flux:<15.3e} {L_uv:<20.3e} {(L_uv/L_bol)*100:<15.2f}")
 print(f"{'U':<10} {u_flux:<15.3e} {L_u:<20.3e} {(L_u/L_bol)*100:<15.2f}")
 print(f"{'G':<10} {g_flux:<15.3e} {L_g:<20.3e} {(L_g/L_bol)*100:<15.2f}")
 
-# Mass vs Radius plot
+#Mass vs Radius plot
 mass_range = np.linspace(5, 20, 50)
-radius_range = np.logspace(12, 14, 50) # in cm
-radius_range_m = radius_range/100 # converting to m
-energy_range = np.logspace(50, 52, 50) # in ergs
+radius_range = np.logspace(12, 14, 50) 
+radius_range_m = radius_range/100 #converting to m
+energy_range = np.logspace(50, 52, 50) 
 
 mass_grid, radius_grid = np.meshgrid(mass_range, radius_range)
-total_mr_lum_grid = np.zeros_like(mass_grid, dtype=float) # Ensure float type
+total_mr_lum_grid = np.zeros_like(mass_grid, dtype=float)
 
 for a in range(mass_grid.shape[0]):
     for b in range(mass_grid.shape[1]):
         mass_val = mass_grid[a, b]
-        radius_val = radius_grid[a, b] # in cm
-        radius_m_mr = radius_val/100 # in m
+        radius_val = radius_grid[a, b] 
+        radius_m_mr = radius_val/100 
         
         lum1 = K_0*(radius_val/(10**14))*(E_exp/10**51)*(0.4/kappa)*(1/mass_val)
         lum1_watts = lum1 * 1e-7
@@ -137,17 +136,17 @@ plt.title("Normalised Total Luminosity in uv, u, and g Bands (Mass vs. Radius)")
 plt.tight_layout()
 plt.show()
 
-# Radius vs Energy plot
-radius_grid2, energy_grid = np.meshgrid(radius_range, energy_range) # radius_range is in cm
-total_re_lum_grid = np.zeros_like(radius_grid2, dtype=float) # Ensure float type
+#Radius vs Energy plot
+radius_grid2, energy_grid = np.meshgrid(radius_range, energy_range) 
+total_re_lum_grid = np.zeros_like(radius_grid2, dtype=float) 
 
 for i in range(radius_grid2.shape[0]):
     for j in range(radius_grid2.shape[1]):
         energy_val = energy_grid[i, j]
-        radius_val2 = radius_grid2[i, j] # in cm
-        radius_m_re = radius_val2/100 # in m
+        radius_val2 = radius_grid2[i, j] 
+        radius_m_re = radius_val2/100 #in m
         
-        lum3 = K_0*(radius_val2/(10**14))*(energy_val/10**51)*(0.4/kappa)*(1/mass) # Using default mass
+        lum3 = K_0*(radius_val2/(10**14))*(energy_val/10**51)*(0.4/kappa)*(1/mass) 
         lum3_watts = lum3 * 1e-7
         
         temp_re = (lum3_watts/(4*np.pi* (radius_m_re**2) * sigma))**(1/4)
@@ -170,12 +169,12 @@ contour_re = plt.contourf(radius_range_m, energy_range, normalised_lum_re, level
 cbar = plt.colorbar(contour_re)     
 cbar.set_label("Normalised Total Luminosity") 
 plt.ylabel("Energy (ergs)")
-plt.xlabel("Radius (m)") # Corrected label to match radius_range in cm
+plt.xlabel("Radius (m)") 
 plt.title("Normalised Total Luminosity in uv, u, and g Bands")
 plt.tight_layout()
 plt.show()
 
-# Mass vs Energy plot
+#Mass vs Energy plot
 mass_grid2, energy_grid2 = np.meshgrid(mass_range, energy_range) 
 total_me_lum_grid = np.zeros_like(mass_grid2, dtype=float)
 
@@ -184,7 +183,7 @@ for y in range(mass_grid2.shape[0]):
         mass_val2 = mass_grid[y, z]
         energy_val2 = energy_grid2[y, z]
         
-        lum4 = K_0*(radius/(10**14))*(energy_val2/10**51)*(0.4/kappa)*(1/mass_val2) # Using default mass
+        lum4 = K_0*(radius/(10**14))*(energy_val2/10**51)*(0.4/kappa)*(1/mass_val2) 
         lum4_watts = lum4 * 1e-7
         
         temp_me = (lum4_watts/(4*np.pi* ((radius/100)**2) * sigma))**(1/4)
